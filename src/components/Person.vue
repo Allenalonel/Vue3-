@@ -1,55 +1,27 @@
 <template>
-    <p>语文成绩：{{ chineseScores }}</p>
-    <p>数学成绩：{{ mathScores }}</p>
-    <button @click="changeCScores">修改语文成绩</button>
-    <button @click="changeMScores">修改数学成绩</button>
+    <!-- hooks可以实现组合式API的项目，一个功能就可以封装一个ts文件
+     只能在setput中使用 -->
+    <!-- 三、解构拿取的数据就可以直接使用了 -->
+    <p>计数：{{ count }}</p>
+    <button @click="addCount">点击计数</button>
+    <br>
+    <img v-for="getImg in imgs" :src="getImg" alt="图片获取失败">
+    <br>
+    <button @click="addImgs">点击添加图片</button>
 </template>
 
 <script lang='ts' setup>
-import { ref, watch, watchEffect } from 'vue';
+    // 一、导入hook
+    import useAddCount from './hooks/useAddCount';
+    import useAddImg from './hooks/useAddImg';
 
-   let chineseScores = ref(0);
-   let mathScores = ref(0);
-
-   let changeCScores = ()=>{
-    if(chineseScores.value<100){
-        chineseScores.value+=10;
-    }
-   }
-   let changeMScores = ()=>{
-    if(mathScores.value<100){
-        mathScores.value+=10;
-    }
-   }
-
-// 一、watch的写法
-   watch([chineseScores,mathScores],(val)=>{
-    let [cScores,mScores] = val;
-    if(cScores>=90&&mScores>=90){
-        console.log('成绩：优秀');
-    }else if(cScores>=80&&mScores>=80){
-        console.log('成绩：良好');
-    }else if(cScores>=60&&mScores>=60){
-        console.log('成绩：及格');
-    }else{
-        console.log('成绩：不及格');
-    }
-   },{immediate:true})
-
-//  二、watchEffect写法，不常用
-//      模糊监视，范围更大，只要在监视中出现的变量发生了改变，就会触发
-   watchEffect(()=>{
-    if(chineseScores.value>=90&&mathScores.value>=90){
-        console.log('成绩：优秀');
-    }else if(chineseScores.value>=80&&mathScores.value>=80){
-        console.log('成绩：良好');
-    }else if(chineseScores.value>=60&&mathScores.value>=60){
-        console.log('成绩：及格');
-    }else{
-        console.log('成绩：不及格');
-    }
-   })
+    // 二、解构拿取导入的hook的数据
+    const {count,addCount} = useAddCount();
+    const {imgs,addImgs} = useAddImg();
 </script>
 
 <style scoped>
+    img{
+        width: 200px;
+    }
 </style>

@@ -8,7 +8,7 @@
         <h1>Hello Vue3!</h1>
         <!-- 第三步：使用子组件 -->
         <Person></Person>
-        <User></User>
+        <!-- <Father></Father> -->
      </div>
 </template>
 
@@ -17,7 +17,8 @@
 <script lang="ts" setup>
     //第一步：导入子组件
     import Person from './components/Person.vue';
-    import User from './components/User.vue';
+    // import Father from './components/Father.vue';
+
     // 默认导出这个组件,使用语法糖后不需要export default
     // export default{ 
     //     //F12调试插件工具中的组件名称
