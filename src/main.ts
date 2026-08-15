@@ -6,6 +6,16 @@ import { createApp } from "vue";
 
 //导入根组件
 import App from "./App.vue"
+import router from "./router/index.ts";
 
 //创建应用，并将应用挂载到index.html中的 <div id="app"></div>
-createApp(App).mount("#app")
+// createApp(App).mount("#app")
+
+// 一、创建app
+const app = createApp(App);
+
+//二、让app使用路由器
+app.use(router);
+
+// 三、挂载app
+app.mount('#app');

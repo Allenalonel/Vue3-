@@ -9,7 +9,7 @@
 
 <script lang='ts' setup>
     import { ref } from 'vue';
-    import Son from './Son_ref.vue';
+    import Son from './Son.vue';
     import Son_ref from './Son_ref.vue';
     // 二、确保标签名一致，并引用
     const mySon = ref();
