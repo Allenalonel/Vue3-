@@ -7,12 +7,19 @@ import { createApp } from "vue";
 //导入根组件
 import App from "./App.vue"
 import router from "./router/index.ts";
+import { createPinia } from "pinia";
 
 //创建应用，并将应用挂载到index.html中的 <div id="app"></div>
 // createApp(App).mount("#app")
 
 // 一、创建app
 const app = createApp(App);
+
+// 一、创建Pinia
+const pinia = createPinia();
+
+// 二、让app使用Pinia
+app.use(pinia);
 
 //二、让app使用路由器
 app.use(router);

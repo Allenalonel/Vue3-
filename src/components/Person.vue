@@ -1,25 +1,64 @@
 <template>
-    <!-- 路由就是借助设置路由器，定义/a请求时，请求A.vue组件，同时卸载上一个组件 -->
-    <!-- 一、超链接，用来发送请求，用户点击超链接，就走某个路由 -->
-     <!-- 代码的方式跳转路由，看A.vue和B.vue -->
-     <!-- 1.直接写路径 -->
-        <!-- ********replace属性，如果添加replace属性，
-         代表在浏览器前进返回中，这个路径会代替掉上一个路径，则用户不能返回到上一个路径
-         这里表示用户跳转到点击跳转到a路径后，无法回到首页了 -->
-    <RouterLink replace to="/a">A 路由跳转第一种写法，直接写路径</RouterLink>
-    <br>
-    <!-- 2.通过path属性 -->
-    <RouterLink replace :to="{path:'/a'}">A 路由跳转第二种写法，path属性</RouterLink>
-    <br>
-    <!-- 3.通过name属性 -->
-    <RouterLink :to="{name:'b'}">B 路由跳转第三种写法，通过name属性</RouterLink>
-    <!-- 二、指定路由的出口，不是必须写在这里，也可以写在别的vue文件中 -->
-    <RouterView></RouterView>
-    <!-- 三、在src目录下创建router目录，在里面创建index.ts -->
+    <h3>计数器：{{ count }}</h3>
+    <h3>放大：{{ bigCount }}</h3>
+    <div>
+        <!-- 一、使用pinia 先去main.js引入并创建 -->
+        <!-- 二、在src目录下创建 store目录在里面存放对应的ts文件，在里面编写仓库内容 -->
+        <!-- 有选项式API和组合式API写法两种 -->
+
+        <select v-model.number="n">
+            <!-- v-model.number 
+            1.v-model影响的是标签的value属性的值 
+            2.可以让传递的数值都转换为数字格式，方便计算 -->
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+        </select>
+    </div>
+    <div>
+        <button @click="add">+</button>
+    </div>
+    <div>
+        <button @click="minus">-</button>
+    </div>
 </template>
 
 <script lang='ts' setup>
-import { RouterLink } from 'vue-router';
+import { storeToRefs } from 'pinia';
+// 在这儿切换 组合式和选项式写法的文件
+import usePersonStore from '../store/Pserson_2';
+    // 三、导入仓库,然后就可以直接使用了
+    
+    const countStore = usePersonStore();
+    // 可选，使用storeToRefs将仓库里面的state()转换为响应式，并顺带解构使用。
+        // 尽量不要使用ToRefs，这会将仓库内其他不必要的参数也转换为响应式。
+    const {count,n,bigCount} = storeToRefs(countStore);
+
+    function add(){
+        // 四、修改数据
+        // 4.1 第一种：单个修改
+        // countStore.count += countStore.n;
+        // 4.2 第二种：批量修改
+        countStore.$patch({
+            count:countStore.count += countStore.n
+        });
+        
+    };
+
+    function minus(){
+        // 4.3 第三种：在ts中设置actions修改
+        countStore.minus();
+    };
+
+    // 五、订阅仓库
+    // 当仓库中的任何一个数据发生变化是，这里面的回调函数执行，有点类似于watch
+    countStore.$subscribe((mutate,state)=>{
+        // 变更相关的信息
+        console.log(mutate);
+        // 变更之后的数据
+        console.log(state);
+
+    })
 </script>
 
 <style scoped>
