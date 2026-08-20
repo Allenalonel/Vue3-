@@ -7,8 +7,13 @@
      <div class="hello">
         <h1>Hello Vue3!</h1>
         <!-- 第三步：使用子组件 -->
-        <Person></Person>
+        <!-- <Person></Person> -->
         <!-- <Father></Father> -->
+     </div>
+     <h1>Pinia购物车示例</h1>
+     <div>
+        <Person_pinia_productList></Person_pinia_productList>
+        <Pserson_pinia_shoppingcar></Pserson_pinia_shoppingcar>
      </div>
 </template>
 
@@ -16,7 +21,8 @@
  <!-- lang="ts"表示这里的脚本用的TS语法 -->
 <script lang="ts" setup>
     //第一步：导入子组件
-    import Person from './components/Person.vue';
+    import Person_pinia_productList from './components/Person_pinia_productList.vue';
+    import Pserson_pinia_shoppingcar from './components/Pserson_pinia_shoppingcar.vue';
     // import Father from './components/Father.vue';
 
     // 默认导出这个组件,使用语法糖后不需要export default
